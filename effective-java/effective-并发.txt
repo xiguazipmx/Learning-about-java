@@ -1,0 +1,25 @@
+并发
+
+同步访问共享的可变数据
+      |- 1.Executor Framework
+      |                                      |-2.1 标准集合接口：List、Queue、Map
+J.U.C-|- 2.Concurrent Collection（并发集合）- |
+      |                                      |-2.2
+      |- 3.Synchronizer(同步器)
+
+始终应该使用wait循环模式来调用wait方法，永远不要再循环之外调用wait方法
+
+70.线程安全性的文档化
+一个方法声明中出现synchronized修饰符，这是个实现细节，并不是导出的API的一部分。
+1.因此，通过查看文档中是否出现synchronized修饰符，可以确定一个方法是否是线程安全的。 X(错误)
+2.出现synchronized关键字就足以用文档说明线程安全性。 X(错误)
+3.安全性级别
+  a. 不可变的(immutable)：这个类的实例是不变的。不需要外部的同步。String、Long、BigInteger
+  b.无条件的线程安全(unconditionally thread-safe：这个类的实例是可变的，但是这个类有着足够的内部同步。
+      它的实例可以并发使用，无需任何外部同步。Random、ConcurrentHashMap
+  c.有条件的线程安全(conditionally thread-safe)：除了有些方法为进行安全的并发使用而需要外部同步之外，
+      这种线程安全级别与无条件的线程安全相同。Collections.synochronized包装返回的集合,他们的迭代器(iterator)要求外部同步。
+  d.非线程安全(not thread-safe)：类的实例是可变的。为了并发使用他们，客户必须利用自己选择的外部同步包围
+      每个方法调用。通用的集合实现。ArrayList/HashMap
+  e:线程对立的(thread-hostile)：这个类不能安全的被多个线程并发使用，即所有的方法调用都被外部同步包围。
+      线程对立的根源在于，没有同步修改静态数据。
