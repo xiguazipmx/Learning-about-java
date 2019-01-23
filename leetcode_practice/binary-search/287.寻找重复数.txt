@@ -1,4 +1,4 @@
-287.寻找重复数
+﻿287.寻找重复数
 给定一个包含 n + 1 个整数的数组 nums，其数字都在 1 到 n 之间（包括 1 和 n），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。
 
 示例 1:
@@ -34,3 +34,25 @@ class Solution:
             sum2 = sum2+y;
         differnts = len(nums)-len(nums2);
         return (sum1-sum2)//differnts;
+
+查看评论思路，做出来反而更加慢。1,2,3,4 ... n,(??)。mid = (left+right)//2;算出中间值，那么小于等于mid的值一共有mid个。
+如果算出来个数大于mid，那么重复值一定在小于mid那一边。然后注意边界值即可
+class Solution:
+    def findDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        left = 1;
+        right = len(nums)-1;
+        while left < right:
+            mid = (left+right)//2;
+            count = 0;
+            for x in nums:
+                if x <= mid:
+                    count += 1;
+            if count >mid:
+                right = mid;
+            else:
+                left = mid+1;
+        return left;
