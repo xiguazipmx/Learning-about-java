@@ -1,0 +1,45 @@
+假设按照升序排序的数组在预先未知的某个点上进行了旋转。
+
+( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2] )。
+
+搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。
+
+你可以假设数组中不存在重复的元素。
+
+你的算法时间复杂度必须是 O(log n) 级别。
+
+示例 1:
+
+输入: nums = [4,5,6,7,0,1,2], target = 0
+输出: 4
+示例 2:
+
+输入: nums = [4,5,6,7,0,1,2], target = 3
+输出: -1
+
+二分法没有暴力搜索来的快好尴尬，应该是数据量太少了。
+主要是考虑分成两部分，有一部分一定是排好序的，另一部分不一定排好序。没有排好序就接着二分直至一个元素。
+想法不难，但是边界值处理有点麻烦
+class Solution:
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        left,right = 0,len(nums)-1;
+        while left <= right:
+            mid = (right+left)//2;
+            if nums[mid] == target:
+                return mid;
+            if nums[left] <= nums[mid]:
+                if nums[mid] >= target and target >= nums[left]:
+                    right = mid-1;
+                else:
+                    left = mid+1;
+            if nums[mid] <= nums[right]:
+                if target >= nums[mid] and target <= nums[right]:
+                    left = mid +1;
+                else:
+                    right = mid -1;
+        return -1;
