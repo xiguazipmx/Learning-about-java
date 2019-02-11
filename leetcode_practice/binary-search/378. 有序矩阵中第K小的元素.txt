@@ -1,0 +1,43 @@
+给定一个 n x n 矩阵，其中每行和每列元素均按升序排序，找到矩阵中第k小的元素。
+请注意，它是排序后的第k小元素，而不是第k个元素。
+
+示例:
+
+matrix = [
+   [ 1,  5,  9],
+   [10, 11, 13],
+   [12, 13, 15]
+],
+k = 8,
+
+返回 13。
+
+看堆排序
+
+low = matrix[0][0]
+        high = matrix[-1][-1]
+        while(low < high):
+            mid = (low+high)//2
+            if sum(self.FindRightIndex(row, mid) for row in matrix) < k:
+                low = mid+1
+            else:
+                high = mid
+        return low
+
+    def FindRightIndex(self,array, element):
+        if element < array[0]:
+            return 0
+        if element >= array[-1]:
+            return len(array)
+        low = 0
+        high = len(array) - 1
+        while (low < high):
+            # print(low, high)
+            mid = (low + high) // 2
+            if high - low == 1 and array[low] <= high < array[high]:
+                return high
+            elif array[mid] <= element:
+                low = mid + 1
+            else:
+                high = mid
+        return high
