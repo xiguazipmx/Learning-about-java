@@ -41,3 +41,68 @@ low = matrix[0][0]
             else:
                 high = mid
         return high
+
+慢吞吞
+class Solution:
+    def kthSmallest(self, matrix, k):
+        """
+        :type matrix: List[List[int]]
+        :type k: int
+        :rtype: int
+        """
+        left,right = matrix[0][0],matrix[-1][-1];
+        while left < right:
+            mid = (left+right)//2;
+            if self._sum(matrix,mid) >= k:
+                right = mid;
+            else:
+                left = mid+1;
+        return left;
+    
+    def _sum(self,matrix,mid):
+        _sum = 0;
+        for mat in matrix:
+            if mat[0] > mid:
+                _sum += 0;
+            elif mat[-1] <= mid:
+                _sum += len(matrix);
+            else:
+                for m in mat:
+                    if m <= mid:
+                        _sum += 1;
+        return _sum;
+快一点
+class Solution:
+    def kthSmallest(self, matrix, k):
+        """
+        :type matrix: List[List[int]]
+        :type k: int
+        :rtype: int
+        """
+        left,right = matrix[0][0],matrix[-1][-1];
+        while left < right:
+            mid = (left+right)//2;
+            if self._sum(matrix,mid) >= k:
+                right = mid;
+            else:
+                left = mid+1;
+        return left;
+    
+    def _sum(self,matrix,mid):
+        _sum = 0;
+        for mat in matrix:
+            if mat[0] > mid:
+                _sum += 0;
+            elif mat[-1] <= mid:
+                _sum += len(matrix);
+            else:
+                left,right = 0,len(mat)-1;
+                while left < right:
+                    m = (left+right)//2;
+                    if mat[m] <= mid:
+                        left = m+1;
+                    else:
+                        right = m;
+                _sum += right;
+        return _sum;
+                
