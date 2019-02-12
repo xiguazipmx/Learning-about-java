@@ -49,4 +49,21 @@ class Solution:
         arr = [];
         _inorder(root,arr);
         return arr[k-1];
-        
+小小改动
+ class Solution:
+    def kthSmallest(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+        """
+        def _inorder(root,arr):
+            if root:
+                _inorder(root.left,arr);
+                arr.append(root.val);
+                if len(arr) >= k:
+                    return;
+                _inorder(root.right,arr);
+        arr = [];
+        _inorder(root,arr);
+        return arr[k-1];
