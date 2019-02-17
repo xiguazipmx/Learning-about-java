@@ -1,0 +1,67 @@
+101. 对称二叉树
+给定一个二叉树，检查它是否是镜像对称的。
+
+例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+
+注意空树时候，利用树对称的话那么从左边遍历和从右边遍历获得结果是一致的
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True;
+        res_left = [root];
+        res_right = [root];
+        while res_left and res_right:
+            node_left = [];
+            node_right = [];
+            node_l = [];
+            node_r = [];
+            for i in range(len(res_right)):
+                if res_left[i].left:
+                    node_left.append(res_left[i].left.val);
+                    node_l.append(res_left[i].left);
+                else:
+                    node_left.append('N');
+                if res_left[i].right:
+                    node_left.append(res_left[i].right.val);
+                    node_l.append(res_left[i].right);
+                else:
+                    node_left.append('N');
+                if res_right[i].right:
+                    node_right.append(res_right[i].right.val);
+                    node_r.append(res_right[i].right);
+                else:
+                    node_right.append('N');
+                if res_right[i].left:
+                    node_right.append(res_right[i].left.val);
+                    node_r.append(res_right[i].left);
+                else:
+                    node_right.append('N');
+            if node_left != node_right:
+                return False;
+            res_left = node_l;
+            res_right = node_r;
+        return True;
