@@ -1,0 +1,50 @@
+111. 二叉树的最小深度
+给定一个二叉树，找出其最小深度。
+
+最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+
+说明: 叶子节点是指没有子节点的节点。
+
+示例:
+
+给定二叉树 [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+返回它的最小深度  2.
+
+虽然是求最小深度，但我感觉意思是要找到左右节点都没有的那个节点
+注意：要先加入子节点而不是先if not n.left and not n.right:这个先判断的话会报错，很奇怪了
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        count = 1;
+        if not root:
+            return 0;
+        res = [root];
+        while res:
+            node = [];
+            for n in res:
+                if n.left:
+                    node.append(n.left);
+                if n.right:
+                    node.append(n.right)
+                if not n.left and not n.right:
+                    return count;
+            count+=1;
+            res = node;
+        return count;
