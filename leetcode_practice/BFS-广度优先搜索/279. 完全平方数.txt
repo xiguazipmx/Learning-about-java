@@ -28,4 +28,28 @@ class Solution:
                 return (not not a) + (not not b);
             a+=1;
         return 3;
-        
+忘记上传：
+class Solution(object):
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        step = 0;
+        visited = ([n]);
+        has_visited = [False for _ in range(n+1)];
+        while visited:
+            tmp = ([]);
+            step += 1;
+            for i in visited:
+                t = 1;
+                tn = i - t*t;
+                while tn >= 0:
+                    if tn == 0:
+                        return step;
+                    if not has_visited[tn]:
+                        tmp.append(tn);
+                    t += 1;
+                    tn = i - t*t;
+            visited = tmp;
+        return step;
