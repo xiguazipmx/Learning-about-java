@@ -112,3 +112,35 @@ class Solution(object):
                                 board[r][c] = ' '
  
         return board
+
+我好像光宗耀祖了
+class Solution(object):
+    def updateBoard(self, board, click):
+        """
+        :type board: List[List[str]]
+        :type click: List[int]
+        :rtype: List[List[str]]
+        """
+        directions = [(-1,-1), (0,-1), (1,-1), (1,0), (1,1), (0,1), (-1,1), (-1,0)];
+        res = [click];
+        row = len(board);
+        col = len(board[0]);
+        while res:
+            tmp = res.pop(0);
+            x,y = tmp[0],tmp[1];
+            count = 0;
+            if board[x][y] == 'M':
+                board[x][y] = 'X';
+                return board;
+            for dx,dy in directions:
+                if 0<=dx+x<row and 0<=dy+y<col and board[x+dx][y+dy]=='M':
+                    count+=1;
+            if count == 0:
+                board[x][y] = 'B';
+                for dx,dy in directions:
+                    if 0<=dx+x<row and 0<=dy+y<col and board[x+dx][y+dy]=='E':
+                        res.append((x+dx,y+dy));
+                        board[x+dx][y+dy] = ' ';
+            else:
+                board[x][y] = str(count); 
+        return board;
