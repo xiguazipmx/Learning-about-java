@@ -53,3 +53,27 @@ class Solution(object):
                     tn = i - t*t;
             visited = tmp;
         return step;
+
+
+class Solution(object):
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        res = [];
+        res.append([n,0]);
+        visited = [False for _ in range(n+1)];
+        visited[n] = True;
+        while res:
+            tmp,step = res.pop(0);
+            i = 1;
+            muti = tmp - i*i;
+            while muti >= 0:
+                if muti == 0:
+                    return step + 1;
+                if not visited[muti]:
+                    res.append([muti,step+1]);
+                    visited[muti] = True;
+                i += 1;
+                muti = tmp - i*i;
