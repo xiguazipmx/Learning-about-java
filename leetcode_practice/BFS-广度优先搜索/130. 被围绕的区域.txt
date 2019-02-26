@@ -1,0 +1,80 @@
+130. 被围绕的区域
+给定一个二维的矩阵，包含 'X' 和 'O'（字母 O）。
+
+找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+
+示例:
+
+X X X X
+X O O X
+X X O X
+X O X X
+运行你的函数后，矩阵变为：
+
+X X X X
+X X X X
+X X X X
+X O X X
+解释:
+
+被围绕的区间不会存在于边界上，换句话说，任何边界上的 'O' 都不会被填充为 'X'。 任何不在边界上，或不与边界上的 'O' 相连的 'O' 最终都会被填充为 'X'。如果两个元素在水平或垂直方向相邻，则称它们是“相连”的。
+
+
+根据解释反向查找，查找四周和O相连的设置为T。然后遍历数组，将O设置为X，将T设置为O
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        if not board:
+            return;
+        queue = [];
+        m, n = len(board), len(board[0])
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O':
+                    if (i in [0, m-1] or j in [0, n-1]) and board[i][j] == 'O':
+                        queue.append((i,j));
+        for x, y in queue:
+            board[x][y] = 'T'
+            for dx, dy in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+                new_x, new_y = x + dx, y + dy
+                if 0 <= new_x < m and 0 <= new_y <n and board[new_x][new_y] == 'O':
+                    queue.append((new_x, new_y))
+
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] == 'O':
+                    board[i][j] = 'X';
+                elif board[i][j] == 'T':
+                    board[i][j] = 'O';
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+        """
+        Do not return anything, modify board in-place instead.
+        """
+        if board == None:
+            return [];
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == 'O':
+                    if i==0 or i==len(board)-1 or j==0 or j==len(board[0])-1:
+                        self.toRot(board,i,j);
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == 'O':
+                    board[i][j] = 'X';
+                elif board[i][j] == 'T':
+                    board[i][j] = 'O';
+    def toRot(self,board,i,j):
+        board[i][j] = 'T';
+        if 0<=i+1<len(board) and board[i+1][j] == 'O':
+            self.toRot(board,i+1,j);
+        if 0<=i-1<len(board) and board[i-1][j] == 'O':
+            self.toRot(board,i-1,j);
+        if 0<=j+1<len(board[0]) and board[i][j+1] == 'O':
+            self.toRot(board,i,j+1);
+        if 0<=j-1<len(board[0]) and board[i][j-1] == 'O':
+            self.toRot(board,i,j-1);
