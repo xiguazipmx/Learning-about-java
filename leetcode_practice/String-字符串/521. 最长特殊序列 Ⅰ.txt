@@ -1,0 +1,25 @@
+521. 最长特殊序列 Ⅰ
+class Solution(object):
+    def findLUSlength(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: int
+        """
+        if a != b:
+            return len(a) if len(a) > len(b) else len(b);
+        else:
+            return -1;
+
+class Solution(object):
+    def findLUSlength(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: int
+        """
+        if a == b:
+            return -1;
+        else:
+            return max(len(a),len(b));
+        
