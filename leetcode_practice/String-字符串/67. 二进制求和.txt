@@ -1,0 +1,46 @@
+67. 二进制求和
+给定两个二进制字符串，返回他们的和（用二进制表示）。
+
+输入为非空字符串且只包含数字 1 和 0。
+
+示例 1:
+
+输入: a = "11", b = "1"
+输出: "100"
+示例 2:
+
+输入: a = "1010", b = "1011"
+输出: "10101"
+
+思路:比较a,b的长度
+	 首先补0(高位补零)
+	 循环相加，逢2加1
+
+class Solution(object):
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        len_a,len_b = len(a),len(b);
+        length = max(len_a,len_b);
+        if len_b > len_a:
+            for i in range(len_b - len_a):
+                a = '0' + a;
+        else:
+            for i in range(len_a - len_b):
+                b = '0' + b;
+        k,tmp = 0,'';
+        for i in range(length):
+            s,k = int(a[-i-1]) + int(b[-i-1]) + k,0;
+            if s == 0:
+                tmp = '0' + tmp;
+            if s == 1:
+                tmp = '1' + tmp;
+            if s > 1:
+                tmp = str(s%2) + tmp;
+                k = s/2;
+        if k == 1:
+            tmp = '1' + tmp;
+        return tmp;
